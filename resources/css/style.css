@@ -1,0 +1,35 @@
+.toast-top-container {
+    position: absolute;
+    top: 65px;
+    width: 280px;
+    right: 40px;
+    height: auto;
+}
+
+#ajaxLoader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, .8) url('{{ asset('themes/fvft/assets/images/loader.svg') }}') no-repeat 50%
+}
+
+.fog_div {
+    display: none;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    z-index: 100;
+    background-color: rgba(30, 30, 30, 0.5);
+}
+
+#ajaxLoader.show {
+    display: block;
+
+}
+.toast{
+    opacity: 1 !important;
+}

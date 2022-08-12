@@ -1,0 +1,14 @@
+[07-Jun-2022 07:32:04 UTC] PHP Fatal error:  Uncaught RuntimeException: Translation file [/home/demofvft/public_html/resources/lang/np.json] contains an invalid JSON structure. in /home/demofvft/public_html/vendor/laravel/framework/src/Illuminate/Translation/FileLoader.php:145
+Stack trace:
+#0 /home/demofvft/public_html/vendor/laravel/framework/src/Illuminate/Collections/Traits/EnumeratesValues.php(767): Illuminate\Translation\FileLoader->Illuminate\Translation\{closure}(Array, '/home/demofvft/...', 0)
+#1 /home/demofvft/public_html/vendor/laravel/framework/src/Illuminate/Translation/FileLoader.php(152): Illuminate\Support\Collection->reduce(Object(Closure), Array)
+#2 /home/demofvft/public_html/vendor/laravel/framework/src/Illuminate/Translation/FileLoader.php(63): Illuminate\Translation\FileLoader->loadJsonPaths('np')
+#3 /home/demofvft/public_html/vendor/laravel/framework/src/Illuminate/Translation/Translator.php(263): Illuminate\Translation\FileLoader->load('np', '*', '*')
+#4 /home/demofvft/public_html/vendor/laravel/framework/src/Illuminate/Translation in /home/demofvft/public_html/vendor/laravel/framework/src/Illuminate/Translation/FileLoader.php on line 145
+[07-Jun-2022 07:34:28 UTC] PHP Fatal error:  Uncaught RuntimeException: Translation file [/home/demofvft/public_html/resources/lang/np.json] contains an invalid JSON structure. in /home/demofvft/public_html/vendor/laravel/framework/src/Illuminate/Translation/FileLoader.php:145
+Stack trace:
+#0 /home/demofvft/public_html/vendor/laravel/framework/src/Illuminate/Collections/Traits/EnumeratesValues.php(767): Illuminate\Translation\FileLoader->Illuminate\Translation\{closure}(Array, '/home/demofvft/...', 0)
+#1 /home/demofvft/public_html/vendor/laravel/framework/src/Illuminate/Translation/FileLoader.php(152): Illuminate\Support\Collection->reduce(Object(Closure), Array)
+#2 /home/demofvft/public_html/vendor/laravel/framework/src/Illuminate/Translation/FileLoader.php(63): Illuminate\Translation\FileLoader->loadJsonPaths('np')
+#3 /home/demofvft/public_html/vendor/laravel/framework/src/Illuminate/Translation/Translator.php(263): Illuminate\Translation\FileLoader->load('np', '*', '*')
+#4 /home/demofvft/public_html/vendor/laravel/framework/src/Illuminate/Translation in /home/demofvft/public_html/vendor/laravel/framework/src/Illuminate/Translation/FileLoader.php on line 145

@@ -1,0 +1,15 @@
+.form-control {
+    color: #272626 !important;
+}
+
+.ico-font{
+    font-size: 18px;
+}
+
+.ico-grid-font{
+    font-size: 15px;
+}
+
+.blue{
+   color: var(--blue);
+}

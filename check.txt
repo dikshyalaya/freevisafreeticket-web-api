@@ -1,0 +1,3 @@
+check category in create job and create employee
+nepali
+remove active or pending

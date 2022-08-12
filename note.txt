@@ -1,0 +1,11 @@
+remove trainings column from employee table
+rename job_title_id to industry_id (changed in live server)
+
+remove employee_job_preference table
+
+2022_05_09_061327_add_favicon_to_general_settings_table
+2022_05_09_063406_create_settings_table
+
+// remove zones
+// default select nepal on address
+// company list not showing in candidate profile / companies
