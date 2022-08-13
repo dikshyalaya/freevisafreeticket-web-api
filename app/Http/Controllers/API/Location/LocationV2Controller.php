@@ -34,7 +34,7 @@ class LocationV2Controller extends Controller
                     'id' => $value->id,
                     'name' => $value->name,
                     'country_code' => $value->iso3,
-                    'flag' => "/assets/images/flags/".strtolower("$value->iso2.svg"),
+                    'flag' => "assets/images/flags/".strtolower("$value->iso2.svg"),
                     // 'state' => $value->states,
                     // 'cities' => $value->cities,
                     // 'districts' => $value->districts,
@@ -51,25 +51,66 @@ class LocationV2Controller extends Controller
         $limit = $request->has("limit") ? $request->limit : 10;
         $query = State::query();
 
+        if ($request->has("id")) {
+            $id = $request->id;
+            $query->where('id', '=', $id);
+        }
+
+        if ($request->has("country_id")) {
+            $country_id = $request->country_id;
+             $query->where('country_id', '=', $country_id);
+        }
+
         if ($request->has("search_query")) {
             $searchTerm = $request->search_query;
             $query->where('name', 'LIKE', "%{$searchTerm}%");
         }
 
         $states = $query->paginate($limit);
+        return $states;
+        
+    }
 
-        $states->setCollection(
-            $states->getCollection()->transform(function ($value) {
+    public function cities(Request $request)
+    {
+        $limit = $request->has("limit") ? $request->limit : 10;
+        $query = City::query();
+
+        if ($request->has("id")) {
+            $id = $request->id;
+            $query->where('id', '=', $id);
+        }
+
+        if ($request->has("country_id")) {
+            $country_id = $request->country_id;
+            $query->where('country_id', '=', $country_id);
+        }
+
+        if ($request->has("state_id")) {
+            $state_id = $request->state_id;
+            $query->where('state_id', '=', $state_id);
+        }
+
+
+        if ($request->has("search_query")) {
+            $searchTerm = $request->search_query;
+            $query->where('name', 'LIKE', "%{$searchTerm}%");
+        }
+
+        $cities = $query->paginate($limit);
+
+       
+            $cities->getCollection()->transform(function ($value) {
                 return [
                     'id' => $value->id,
                     'name' => $value->name,
                     'country' => $value->country,
-                    'cities' => $value->cities,
+                    'state' => $value->state
                 ];
-            })
-        );
+            });
+        
 
-        return $this->sendResponse(compact('states'), "success");
+            return $cities;
     }
 
 }

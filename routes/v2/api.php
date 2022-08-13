@@ -6,6 +6,6 @@ use App\Http\Controllers\API\Location\LocationV2Controller;
 
 
 Route::get("countries", [LocationV2Controller::class, 'countries']);
-// Route::get("states", [LocationController::class, 'states']);
-// Route::get("cities", [LocationController::class, 'cities']);
+Route::get("states", [LocationV2Controller::class, 'states']);
+Route::get("cities", [LocationV2Controller::class, 'cities']);
 // Route::get("metaData", [ApiMethodsController::class, 'metData']);
