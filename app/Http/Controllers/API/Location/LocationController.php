@@ -44,24 +44,6 @@ class LocationController extends Controller
         return $this->sendResponse(compact('countries'),"success");
     }
 
-
-    public function countries_list_v2(Request $request)
-    {
-        $limit = $request->has("limit") ? $request->limit : 10;
-        $query = Country::query();
-        $query->where('is_active', 1);
-
-        if ($request->has("search_query")) {
-            $searchTerm = $request->search_query;
-            $query->where('name', 'LIKE', "%{$searchTerm}%");
-        }
-
-        $countries = $query->paginate($limit);
-        return $countries;
-        
-    }
-
-
     public function states(Request $request)
     {
         $limit= $request->has("limit") ? $request->limit : 10;

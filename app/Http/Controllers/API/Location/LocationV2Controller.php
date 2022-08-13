@@ -27,7 +27,49 @@ class LocationV2Controller extends Controller
         }
 
         $countries = $query->paginate($limit);
+
+        //$countries->setCollection(
+            $countries->getCollection()->transform(function ($value) {
+                return [
+                    'id' => $value->id,
+                    'name' => $value->name,
+                    'country_code' => $value->iso3,
+                    'flag' => "/assets/images/flags/".strtolower("$value->iso2.svg"),
+                    // 'state' => $value->states,
+                    // 'cities' => $value->cities,
+                    // 'districts' => $value->districts,
+                ];
+            });
+        //);
+
+
         return $countries;
+    }
+
+    public function states(Request $request)
+    {
+        $limit = $request->has("limit") ? $request->limit : 10;
+        $query = State::query();
+
+        if ($request->has("search_query")) {
+            $searchTerm = $request->search_query;
+            $query->where('name', 'LIKE', "%{$searchTerm}%");
+        }
+
+        $states = $query->paginate($limit);
+
+        $states->setCollection(
+            $states->getCollection()->transform(function ($value) {
+                return [
+                    'id' => $value->id,
+                    'name' => $value->name,
+                    'country' => $value->country,
+                    'cities' => $value->cities,
+                ];
+            })
+        );
+
+        return $this->sendResponse(compact('states'), "success");
     }
 
 }
