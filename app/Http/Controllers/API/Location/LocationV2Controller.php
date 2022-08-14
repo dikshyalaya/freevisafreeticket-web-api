@@ -21,6 +21,10 @@ class LocationV2Controller extends Controller
         $query = Country::query();
         $query->where('is_active', 1);
 
+        if ($request->has("country_id")) {           
+            $query->where('id',  $request->country_id);
+        }
+
         if ($request->has("search_query")) {
             $searchTerm = $request->search_query;
             $query->where('name', 'LIKE', "%{$searchTerm}%");
@@ -28,21 +32,23 @@ class LocationV2Controller extends Controller
 
         $countries = $query->paginate($limit);
 
-        //$countries->setCollection(
-            $countries->getCollection()->transform(function ($value) {
-                return [
-                    'id' => $value->id,
-                    'name' => $value->name,
-                    'country_code' => $value->iso3,
-                    'flag' => "assets/images/flags/".strtolower("$value->iso2.svg"),
-                    // 'state' => $value->states,
-                    // 'cities' => $value->cities,
-                    // 'districts' => $value->districts,
-                ];
-            });
-        //);
-
-
+        $countries->transform(function ($value) {
+            return [
+                'id' => $value->id,
+                'name' => $value->name,
+                'native' => $value->native,
+                'native' => $value->native,
+                'flag' => "assets/images/flags/".strtolower($value->iso2),
+                'phone_code'=> $value->phonecode,
+                'currency'=>[
+                    'currency_name' => $value->currency_name,
+                    'currency_code' => $value->currency,
+                    'currency_symbol' => $value->currency_symbol],
+                //'region' => $value->subregion,
+                //'timezones' => json_decode($value->timezones),
+            ];
+        });
+        
         return $countries;
     }
 

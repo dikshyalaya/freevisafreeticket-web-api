@@ -9,9 +9,7 @@ trait ApiMethods
     function sendResponse($result, $message = null, $pagination = null, $success = true)
     {
         // dd($pagination?$pagination:"not found");
-        $response = [
-            'success' => $success
-        ];
+        $response = array();
         $pagination ? $response = array_merge($response, [
             "meta" => $pagination
         ]) : null;
@@ -20,7 +18,7 @@ trait ApiMethods
             'message' => $message,
             'code' => Response::HTTP_OK
         ]);
-        return response()->json($result, Response::HTTP_OK, $headers = [], JSON_PRETTY_PRINT);
+        return response()->json($response, Response::HTTP_OK, $headers = [], JSON_PRETTY_PRINT);
     }
 
     function sendError($error, $code = 500, $errorMessages = [])
