@@ -38,7 +38,7 @@ class LocationV2Controller extends Controller
                 'name' => $value->name,
                 'native' => $value->native,
                 'native' => $value->native,
-                'flag' => "assets/images/flags/".strtolower($value->iso2),
+                'flag' => "assets/images/flags/".strtolower($value->iso2).".svg",
                 'phone_code'=> $value->phonecode,
                 'currency'=>[
                     'currency_name' => $value->currency_name,
