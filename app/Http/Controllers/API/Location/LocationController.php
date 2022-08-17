@@ -33,7 +33,7 @@ class LocationController extends Controller
                     'id' => $value->id,
                     'name' => $value->name,
                     'country_code' => $value->iso3,
-                    'flag' => $value->flag,
+                    'flag' => "/assets/images/flags/".strtolower($value->iso2).".svg",
                     'state' => $value->states,
                     'cities' => $value->cities,
                     'districts' => $value->districts,

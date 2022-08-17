@@ -372,6 +372,18 @@ class JobsListController extends Controller
         // 10 countries order by number of jobs desc
         $countries = Country::has('jobs')->inRandomOrder()->limit(10)->get();
 
+         $countries->transform(function ($value) {
+                return [
+                    'id' => $value->id,
+                    'name' => $value->name,
+                    'country_code' => $value->iso3,
+                    'flag' => "/assets/images/flags/".strtolower($value->iso2).".svg",
+                    'state' => $value->states,
+                    'cities' => $value->cities,
+                    'districts' => $value->districts,
+                ];
+            });
+
         // 5 categories
         $categories = JobCategory::has('jobs')->inRandomOrder()->limit(5)->get();
 
