@@ -9,7 +9,9 @@ trait ApiMethods
     function sendResponse($result, $message = null, $pagination = null, $success = true)
     {
         // dd($pagination?$pagination:"not found");
-        $response = array();
+        $response = [
+            'success' => $success
+        ];
         $pagination ? $response = array_merge($response, [
             "meta" => $pagination
         ]) : null;

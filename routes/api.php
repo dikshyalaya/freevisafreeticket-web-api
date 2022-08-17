@@ -18,9 +18,7 @@ Route::prefix('v1')->group(function(){
     require_once 'v1/v1-api.php';
 });
 
-// Route::prefix('v2')->group(function () {
-//     require_once 'v2/api.php';
-// });
 
- require_once 'v2/api.php';
-
+Route::prefix('v2')->group(function () {
+    require_once 'v2/api.php';
+});
