@@ -27,19 +27,29 @@ class LocationController extends Controller
 
         $countries = $query->paginate($limit);
 
-        $countries->setCollection(
-            $countries->getCollection()->transform(function ($value) {
-                return [
-                    'id' => $value->id,
-                    'name' => $value->name,
-                    'country_code' => $value->iso3,
-                    'flag' => "/assets/images/flags/".strtolower($value->iso2).".svg",
-                    'state' => $value->states,
-                    'cities' => $value->cities,
-                    'districts' => $value->districts,
-                ];
-            })
-        );
+        $countries->transform(function ($value) {
+            return [
+                'id' => $value->id,
+                'name' => $value->name,
+                'capital' => $value->capital,
+                'native' => $value->native,
+                'country_code' => $value->iso3,
+                'phonecode' => $value->phonecode,
+                'flag' => "/assets/images/flags/" . strtolower($value->iso2) . ".svg",
+                'region' => $value->regions,
+                'subregion' => $value->subregion,
+                'timezones' => json_decode($value->timezones),
+
+                'curreny' => $value->currency,
+                'currency_name' => $value->currency_name,
+                'currency_symbol' => $value->currency_symbol,
+                'translations' => json_decode($value->translations)
+
+                // 'state' => $value->states,
+                // 'cities' => $value->cities,
+                // 'districts' => $value->districts,
+            ];
+        });
 
         return $this->sendResponse(compact('countries'),"success");
     }
