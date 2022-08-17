@@ -126,8 +126,8 @@ class ProfileController extends Controller
                     $employee_training->training_id = $training;
                     $employee_training->save();
                 }
-//                $fields['trainings'] = json_encode($trainings);
-//                $employee->update($fields);
+            //    $fields['trainings'] = json_encode($trainings);
+            //    $employee->update($fields);
             }
 
             if (isset($request->skill) AND !blank($request->skill)){
@@ -179,8 +179,8 @@ class ProfileController extends Controller
                 $employee_experience->employ_id = $employee->id;
                 $employee_experience->experiencelevels_id = $experience['experiencelevels_id'];
                 $employee_experience->country_id = $experience['country_id'];
-//                $employee_experience->job_category_id = $experience['job_category_id'];
-//                $employee_experience->job_title_id = $experience['job_title_id'];
+            //    $employee_experience->job_category_id = $experience['job_category_id'];
+            //    $employee_experience->job_title_id = $experience['job_title_id'];
                 $employee_experience->job_category_id = $experience['job_category_id'];
                 $employee_experience->industry_id = $experience['industry_id'];
                 $employee_experience->working_year = $experience['working_year'];
