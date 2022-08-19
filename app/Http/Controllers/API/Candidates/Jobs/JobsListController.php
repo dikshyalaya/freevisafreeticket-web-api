@@ -401,14 +401,33 @@ class JobsListController extends Controller
 
         // 5 latest jobs
         $new_jobs = Job::with(['company', 'company.country', 'company.state', 'company.city', 'country', 'education_level', 'jobExperience', 'job_category', 'jobShift'])->orderBy('id', 'desc')->limit(5)->get();
+       
+        foreach($new_jobs as $job){
+            $job->country->flag = "/assets/images/flags/" . strtolower($job->country->iso2) . ".svg";
+        }
+       
 
         $all_jobs = Job::with(['company', 'company.country', 'company.state', 'company.city', 'country', 'education_level', 'jobExperience', 'job_category', 'jobShift'])->inRandomOrder()->limit(5)->get();
 
+        foreach ($all_jobs as $job) {
+            $job->country->flag = "/assets/images/flags/" . strtolower($job->country->iso2) . ".svg";
+        }
+
+        
+
         $featured_jobs = Job::where('is_featured', 1)->with(['company', 'country', 'education_level', 'jobExperience', 'job_category', 'jobShift'])->inRandomOrder()->limit(5)->get();
+
+        foreach ($featured_jobs as $job) {
+            $job->country->flag = "/assets/images/flags/" . strtolower($job->country->iso2) . ".svg";
+        }
+
+
 
         // 5 companies
         $companies = Company::has('jobs')->with(['country', 'state', 'city'])->inRandomOrder()->limit(5)->get();
-
+        foreach ($companies as $company) {
+            $company->country->flag = "/assets/images/flags/" . strtolower($job->country->iso2) . ".svg";
+        }
         // 5 featured jobs
         //        $featured_jobs = $this->getFeaturedJobs();
         //    )PHhKs]9(q.=
