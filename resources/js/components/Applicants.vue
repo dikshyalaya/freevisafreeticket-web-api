@@ -41,13 +41,13 @@
                     <div class="card mb-xl-0">
                         <div class="item-card">
                             <div class="item-card-desc">
-                                <a href="#" @click.prevent="setStatusFilter('shortlisted')"></a>
+                                <a href="#" @click.prevent="setStatusFilter('sortlisted')"></a>
                                 <div class="item-card-img">
                                     <img src="/images/defaultimage.jpg" alt="img" class="br-tr-7 br-tl-7"/>
                                 </div>
                                 <div class="item-card-text">
                                     <h4 class="mb-0">
-                                        Shortlisted Applications<span>{{status_count["shortlisted"]}}</span>
+                                        Sortlisted Applications<span>{{status_count["sortlisted"]}}</span>
                                     </h4>
                                 </div>
                             </div>
@@ -114,7 +114,7 @@
                         <span class="col-md-3 text-right">Set Application Status: </span>
                         <div class="btn-group  col-md-9">
                             <button :disabled="!selected.length" class="btn btn-outline-primary btn-sm" @click="bulkStatusUpdate('pending')">Unscreened</button>
-                            <button :disabled="!selected.length" class="btn btn-outline-primary btn-sm" @click="bulkStatusUpdate('shortlisted')">Shortlisted</button>
+                            <button :disabled="!selected.length" class="btn btn-outline-primary btn-sm" @click="bulkStatusUpdate('sortlisted')">Sortlisted</button>
                             <button :disabled="!selected.length" class="btn btn-outline-primary btn-sm" @click="bulkStatusUpdate('INTERVIEWED')">Interviewed</button>
                             <button :disabled="!selected.length" class="btn btn-outline-primary btn-sm" @click="bulkStatusUpdate('SELECTEDFORINTERVIEW')">Selected</button>
                             <button :disabled="!selected.length" class="btn btn-outline-primary btn-sm" @click="bulkStatusUpdate('REJECTED')">Rejected</button>

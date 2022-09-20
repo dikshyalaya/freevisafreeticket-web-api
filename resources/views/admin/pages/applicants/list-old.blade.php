@@ -73,7 +73,7 @@ if (session()->get('delete')) {
                                         <td>{{ date('Y-m-d', strtotime($item->created_at)) }}</td>
                                         <td>
                                             <?php
-                                            $status_indicator_items = ['pending' => 'warning', 'accepted' => 'success', 'rejected' => 'danger', 'shortlisted' => 'success', 'selectedForInterview' => 'success', 'interviewed' => 'success', 'redlisted' => 'danger'];
+                                            $status_indicator_items = ['pending' => 'warning', 'accepted' => 'success', 'rejected' => 'danger', 'sortlisted' => 'success', 'selectedForInterview' => 'success', 'interviewed' => 'success', 'redlisted' => 'danger'];
                                             $status_indicator = $status_indicator_items[$item->status];
                                             ?>
                                             <span class="label label-{{ $status_indicator }}">{{ $item->status }}</span>

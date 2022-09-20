@@ -74,8 +74,8 @@ if (session()->get('delete')) {
                                         <td>{{ !($item->employe != null && $item->employe->country != null && $item->employe->country->name != null) ?: $item->employe->country->name }}</td>
                                         <td>
                                             @php
-                                            $statuses = ['pending' => 'Unscreened', 'shortlisted' => 'Shortlisted', 'selectedForInterview' => 'Selected for Interview', 'interviewed' => 'Interviewed', 'accepted' => 'Selected', 'rejected' => 'Rejected', 'redlisted' => 'Red List'];
-                                            $status_indicator_items = ['pending' => 'warning', 'shortlisted' => 'pink', 'selectedForInterview' => 'orange', 'interviewed' => 'orange', 'accepted' => 'green', 'rejected' => 'red', 'redlisted' => 'danger'];
+                                            $statuses = ['pending' => 'Unscreened', 'sortlisted' => 'Sortlisted', 'selectedForInterview' => 'Selected for Interview', 'interviewed' => 'Interviewed', 'accepted' => 'Selected', 'rejected' => 'Rejected', 'redlisted' => 'Red List'];
+                                            $status_indicator_items = ['pending' => 'warning', 'sortlisted' => 'pink', 'selectedForInterview' => 'orange', 'interviewed' => 'orange', 'accepted' => 'green', 'rejected' => 'red', 'redlisted' => 'danger'];
                                             $status_indicator = $status_indicator_items[$item->status];
                                             $status_name = $statuses[$item->status];
                                             @endphp

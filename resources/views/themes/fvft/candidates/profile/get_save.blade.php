@@ -47,9 +47,9 @@
                                             <div class="servic-data text-white mt-3">
                                                 <h4 class="font-weight-semibold mb-2">{{ __('Profile Completion') }}</h4>
                                                 @if($employ->calculateProfileCompletion() < 100)
-                                                    <p class="text-muted text-white">{{ __('Complete your profile to 100% to increase the chance of getting shortlisted for the right job!') }}</p>
+                                                    <p class="text-muted text-white">{{ __('Complete your profile to 100% to increase the chance of getting sortlisted for the right job!') }}</p>
                                                 @else
-                                                    <p class="text-muted text-white">{{ __('Congratulation your profile is 100% complete. You have more chance of getting shortlisted for the right job!') }}</p>
+                                                    <p class="text-muted text-white">{{ __('Congratulation your profile is 100% complete. You have more chance of getting sortlisted for the right job!') }}</p>
                                                 @endif
                                             </div>
                                         </div>

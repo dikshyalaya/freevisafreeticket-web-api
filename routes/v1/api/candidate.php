@@ -17,6 +17,10 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 
 Route::middleware('auth:api')->group(function () {
+
+    Route::get('application-status', [ProfileController::class, 'get_profile']);
+
+
     Route::get('profile', [ProfileController::class, 'get_profile']);
     Route::post('profile', [ProfileController::class, 'updateProfile']);
     Route::post('job-application', [JobApplicationController::class, 'apply']);
@@ -44,6 +48,8 @@ Route::middleware('auth:api')->group(function () {
     Route::patch('/preference/country', [PreferenceController::class, 'update_employes_country'])->name('candidate.preference.country.update');
     Route::delete('/preference/country/{id}', [PreferenceController::class, 'delete_employes_country'])->name('candidate.preference.country.delete');
 });
+
+
 // Listing
 Route::get('job/home', [JobsListController::class, 'getHome']);
 Route::get('job-list', [JobsListController::class, 'jobListing']);
@@ -62,4 +68,3 @@ Route::get('banners', [BannerController::class, 'list']);
 Route::post('saveJobPreference', [PreferenceController::class, 'saveJobPreference']);
 Route::get('getJobPreference', [PreferenceController::class, 'getJobPreference']);
 Route::post('removeJobPreference', [PreferenceController::class, 'removeJobPreference']);
-

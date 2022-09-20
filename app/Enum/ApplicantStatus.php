@@ -5,7 +5,7 @@ namespace App\Enum;
 interface ApplicantStatus
 {
     const PENDING = "pending";
-    const SHORTLISTED = "shortlisted";
+    const SORTLISTED = "sortlisted";
     const SELECTEDFORINTERVIEW = "selectedForInterview";
     const INTERVIEWED = "interviewed";
     const ACCEPTED = "selected";

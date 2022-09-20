@@ -165,9 +165,9 @@ class DashboardController extends Controller
                     "background" => "red",
                 ],
                 [
-                    "title" => "Shortlisted Applications",
+                    "title" => "Sortlisted Applications",
                     "img" => "megaphone.svg",
-                    "totalcount" => JobApplication::where('status', 'shortlisted')->count(),
+                    "totalcount" => JobApplication::where('status', 'sortlisted')->count(),
                     "link" => route('admin.applicants.list'),
                     "background" => "red",
                 ],

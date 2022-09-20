@@ -69,4 +69,6 @@ class JobApplicationController extends Controller
         }
         return $this->sendResponse($jobs,"Jobs Applications List.");
     }
+
+    
 }

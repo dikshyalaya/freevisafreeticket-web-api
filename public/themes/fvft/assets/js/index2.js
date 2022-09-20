@@ -267,7 +267,7 @@ $(function(e){
 			{value: 95, label: 'Saved jobs'},
 			{value: 30, label: 'Applied jobs'},
 			{value: 45, label: 'Active jobs'},
-			{value: 20, label: 'Shortlisted'},
+			{value: 20, label: 'Sortlisted'},
 		  ],
 		  colors: [
 		'#ec296b', '#4801FF ', '#04ce1c', '#ff382b'

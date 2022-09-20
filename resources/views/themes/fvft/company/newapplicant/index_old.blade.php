@@ -41,7 +41,7 @@
                 <div class="card-header bg-primary">
                     <div class="row w-100">
                         <div class="col-md-6">
-                            <h6 class="card-title">Shortlisted Applicants</h6>
+                            <h6 class="card-title">Sortlisted Applicants</h6>
                         </div>
                         <div class="col-md-6">
                             <a href="javascript:void(0);" class="float-right text-white">View All</a>
@@ -135,8 +135,8 @@
                             onclick="updateBulkApplicantStatus('{{ ApplicantStatus::PENDING }}');"
                             class="btn btn-outline-secondary rounded-0 text-dark bg-white">Unscreened</a>
                         <a href="javascript:void(0)"
-                            onclick="updateBulkApplicantStatus('{{ ApplicantStatus::SHORTLISTED }}');"
-                            class="btn btn-outline-secondary rounded-0 text-dark bg-white ml-2">Shortlisted</a>
+                            onclick="updateBulkApplicantStatus('{{ ApplicantStatus::SORTLISTED }}');"
+                            class="btn btn-outline-secondary rounded-0 text-dark bg-white ml-2">Sortlisted</a>
                         <a href="javascript:void(0)"
                             onclick="updateBulkApplicantStatus('{{ ApplicantStatus::INTERVIEWED }}');"
                             class="btn btn-outline-secondary rounded-0 text-dark bg-white ml-2">Interviewed</a>

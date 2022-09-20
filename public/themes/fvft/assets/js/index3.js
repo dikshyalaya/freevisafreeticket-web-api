@@ -200,7 +200,7 @@ $(function(e){
       data: [20, 56, 18, 75, 65, 74, 78, 67, 84]
     },
     {
-      name: 'Shortlisted',
+      name: 'Sortlisted',
       type: 'bar',
       stack: 'Stack',
       data: [12, 14, 15, 50, 24, 24, 10, 20 ,30]

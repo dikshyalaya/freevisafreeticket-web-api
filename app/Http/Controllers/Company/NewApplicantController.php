@@ -216,7 +216,7 @@ class NewApplicantController extends Controller
         if ($this->company()) {
             $status_count['total'] = $this->company()->job_applications->count();
             $status_count['pending'] = $this->company()->job_applications->where('status', JobApplicationStatus::PENDING)->count();
-            $status_count['shortlisted'] = $this->company()->job_applications->where('status', JobApplicationStatus::SHORT_LISTED)->count();
+            $status_count['sortlisted'] = $this->company()->job_applications->where('status', JobApplicationStatus::SORT_LISTED)->count();
             $status_count['interviewed'] = $this->company()->job_applications->where('status', JobApplicationStatus::INTERVIEWED)->count();
             $status_count['accepted'] = $this->company()->job_applications->where('status', JobApplicationStatus::ACCEPTED)->count();
             $status_count['rejected'] = $this->company()->job_applications->where('status', JobApplicationStatus::REJECTED)->count();
@@ -237,7 +237,7 @@ class NewApplicantController extends Controller
         $preferredCountries = Country::whereIn("id", $jobPreferredCountries)->select("id", "name")->get();
         $applicationStatus = [
             ApplicantStatus::PENDING,
-            ApplicantStatus::SHORTLISTED,
+            ApplicantStatus::SORTLISTED,
             ApplicantStatus::SELECTEDFORINTERVIEW,
             ApplicantStatus::INTERVIEWED,
             ApplicantStatus::ACCEPTED,
@@ -431,9 +431,9 @@ class NewApplicantController extends Controller
                     'bg-color' => 'bg-gray',
                 ],
                 [
-                    'title' => 'Shortlisted Applications',
-                    'link' => route('company.applicant.indexpage', ['status' => JobApplicationStatus::SHORT_LISTED]),
-                    'totalcount' => ($this->company()) ? $this->company()->job_applications->where('status', JobApplicationStatus::SHORT_LISTED)->count() : '',
+                    'title' => 'Sortlisted Applications',
+                    'link' => route('company.applicant.indexpage', ['status' => JobApplicationStatus::SORT_LISTED]),
+                    'totalcount' => ($this->company()) ? $this->company()->job_applications->where('status', JobApplicationStatus::SORT_LISTED)->count() : '',
                     'image' => 'blogging.svg',
                     'bg-color' => 'bg-pink',
                 ],

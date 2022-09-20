@@ -66,9 +66,9 @@
                                                             <option data-select2-id="select2-data-5-o1jo" value="pending"
                                                                 {{ isset($application->status) ? ('pending' == $application->status ? 'selected' : '') : null }}>
                                                                 Pending</option>
-                                                            <option data-select2-id="select2-data-5-o1j" value="shortlisted"
-                                                                {{ isset($application->status) ? ('shortlisted' == $application->status ? 'selected' : '') : null }}>
-                                                                Shortlisted</option>
+                                                            <option data-select2-id="select2-data-5-o1j" value="sortlisted"
+                                                                {{ isset($application->status) ? ('sortlisted' == $application->status ? 'selected' : '') : null }}>
+                                                                Sortlisted</option>
                                                             <option data-select2-id="select2-data-5-o1k" value="selectedForInterview"
                                                                 {{ isset($application->status) ? ('selectedForInterview' == $application->status ? 'selected' : '') : null }}>
                                                                 Selected For Interview</option>

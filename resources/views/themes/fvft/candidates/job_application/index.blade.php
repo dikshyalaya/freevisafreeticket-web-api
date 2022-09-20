@@ -117,8 +117,8 @@
                                                     <td>{{ date('Y-m-d', strtotime($application->created_at)) }}</td>
                                                     <td>
                                                         @php
-                                                            $statuses = ['pending' => 'Unscreened', 'shortlisted' => 'Shortlisted', 'selectedForInterview' => 'Selected for Interview', 'interviewed' => 'Interviewed', 'accepted' => 'Selected', 'rejected' => 'Rejected', 'redlisted' => 'Red List'];
-                                                            $status_indicator_items = ['pending' => 'gray', 'shortlisted' => 'pink', 'selectedForInterview' => 'orange', 'interviewed' => 'orange', 'accepted' => 'green', 'rejected' => 'red', 'redlisted' => 'danger'];
+                                                            $statuses = ['pending' => 'Unscreened', 'sortlisted' => 'Sortlisted', 'selectedForInterview' => 'Selected for Interview', 'interviewed' => 'Interviewed', 'accepted' => 'Selected', 'rejected' => 'Rejected', 'redlisted' => 'Red List'];
+                                                            $status_indicator_items = ['pending' => 'gray', 'sortlisted' => 'pink', 'selectedForInterview' => 'orange', 'interviewed' => 'orange', 'accepted' => 'green', 'rejected' => 'red', 'redlisted' => 'danger'];
                                                             $status_indicator = $status_indicator_items[$application->status];
                                                             $status_name = $statuses[$application->status];
                                                         @endphp

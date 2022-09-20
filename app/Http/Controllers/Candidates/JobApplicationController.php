@@ -37,8 +37,8 @@ class JobApplicationController extends Controller
             $q;
         })->when($type == 'unscreened-applications', function($q){
             $q->where('status', 'pending');
-        })->when($type == 'shortlisted-applications', function($q){
-            $q->where('status', 'shortlisted');
+        })->when($type == 'sortlisted-applications', function($q){
+            $q->where('status', 'sortlisted');
         })->when($type == 'interviewed-applications',function($q){
             $q->where('status', 'interviewed');
         })->when($type == 'selected-applications', function($q){
@@ -71,9 +71,9 @@ class JobApplicationController extends Controller
                 'bg-color' => 'bg-gray',
             ],
             [
-                'title' => 'Shortlisted Applications',
-                'link' => $this->__route('shortlisted-applications'),
-                'totalcount' => $this->employe()->job_applications->where('status', 'shortlisted')->count(),
+                'title' => 'Sortlisted Applications',
+                'link' => $this->__route('sortlisted-applications'),
+                'totalcount' => $this->employe()->job_applications->where('status', 'sortlisted')->count(),
                 'image' => 'blogging.svg',
                 'bg-color' => 'bg-pink',
             ],
@@ -111,7 +111,7 @@ class JobApplicationController extends Controller
             case 'unscreened-applications':
                 return 'Unscreened Applications';
                 break;
-            case 'shortlisted-applications':
+            case 'sortlisted-applications':
                 return 'Shortilisted Applications';
                 break;
             case 'interviewed-applications':

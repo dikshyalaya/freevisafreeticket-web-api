@@ -85,8 +85,8 @@
                             onclick="updateBulkApplicantStatus('{{ ApplicantStatus::PENDING }}');"
                             class="btn btn-outline-secondary rounded-0 text-dark bg-white">Unscreened</a>
                         <a href="javascript:void(0)"
-                            onclick="updateBulkApplicantStatus('{{ ApplicantStatus::SHORTLISTED }}');"
-                            class="btn btn-outline-secondary rounded-0 text-dark bg-white ml-2">Shortlisted</a>
+                            onclick="updateBulkApplicantStatus('{{ ApplicantStatus::SORTLISTED }}');"
+                            class="btn btn-outline-secondary rounded-0 text-dark bg-white ml-2">Sortlisted</a>
                         <a href="javascript:void(0)"
                             onclick="updateBulkApplicantStatus('{{ ApplicantStatus::INTERVIEWED }}');"
                             class="btn btn-outline-secondary rounded-0 text-dark bg-white ml-2">Interviewed</a>

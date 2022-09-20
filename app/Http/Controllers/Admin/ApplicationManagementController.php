@@ -120,9 +120,9 @@ class ApplicationManagementController extends Controller
                     'bg-color' => 'bg-gray',
                 ],
                 [
-                    'title' => 'Shortlisted Applications',
-                    'link' => route('admin.applicant.indexpage', ['status' => JobApplicationStatus::SHORT_LISTED]),
-                    'totalcount' => $jobapplication->where('status', JobApplicationStatus::SHORT_LISTED)->count(),
+                    'title' => 'Sortlisted Applications',
+                    'link' => route('admin.applicant.indexpage', ['status' => JobApplicationStatus::SORT_LISTED]),
+                    'totalcount' => $jobapplication->where('status', JobApplicationStatus::SORT_LISTED)->count(),
                     'image' => 'blogging.svg',
                     'bg-color' => 'bg-pink',
                 ],

@@ -134,9 +134,9 @@ class DashController extends Controller
                     'bg-color' => 'bg-gray',
                 ],
                 [
-                    'title' => 'Shortlisted Applications',
+                    'title' => 'Sortlisted Applications',
                     'link' => route('company.applicant.index'),
-                    'totalcount' => ($this->company()) ? $this->company()->job_applications->where('status', 'shortlisted')->count() : '',
+                    'totalcount' => ($this->company()) ? $this->company()->job_applications->where('status', 'sortlisted')->count() : '',
                     'image' => 'blogging.svg',
                     'bg-color' => 'bg-pink',
                 ],

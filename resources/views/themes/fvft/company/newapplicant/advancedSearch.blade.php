@@ -192,8 +192,8 @@
                                             <option value="">Select Application Status</option>
                                             <option value="{{ ApplicantStatus::PENDING }}">
                                                 {{ ucfirst(ApplicantStatus::PENDING) }}</option>
-                                            <option value="{{ ApplicantStatus::SHORTLISTED }}">
-                                                {{ ucfirst(ApplicantStatus::SHORTLISTED) }}</option>
+                                            <option value="{{ ApplicantStatus::SORTLISTED }}">
+                                                {{ ucfirst(ApplicantStatus::SORTLISTED) }}</option>
                                             <option value="{{ ApplicantStatus::SELECTEDFORINTERVIEW }}">
                                                 {{ ucfirst(ApplicantStatus::SELECTEDFORINTERVIEW) }}</option>
                                             <option value="{{ ApplicantStatus::INTERVIEWED }}">

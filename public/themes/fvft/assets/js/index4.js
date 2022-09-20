@@ -9,7 +9,7 @@ $(function(e){
       data: [10, 15, 9, 18, 10, 15, 22]
     },
     {
-      name: 'Shortlisted',
+      name: 'Sortlisted',
       type: 'bar',
       data: [10, 14, 10, 15, 9, 25, 16]
     }
