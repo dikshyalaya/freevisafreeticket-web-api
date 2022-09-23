@@ -4,6 +4,7 @@ use App\Http\Controllers\API\ApiMethodsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Location\LocationController;
 use App\Http\Controllers\API\UsefulInformationController;
+use App\Models\UsefulInformation;
 
 Route::prefix('admin')->group(function(){
     require_once 'api/admin.php';
@@ -20,4 +21,8 @@ Route::get("states", [LocationController::class, 'states']);
 Route::get("cities", [LocationController::class, 'cities']);
 Route::get("metaData", [ApiMethodsController::class, 'metData']);
 
-Route::get("info-pages/{slug}", [InfoPagesController::class,"get_page_by_slug"]);
+
+Route::prefix("info-pages")->group(function(){
+    Route::get("/list", [UsefulInformationController::class, 'List']);
+    Route::get("{slug}", [UsefulInformationController::class,"GetPage"]);
+});

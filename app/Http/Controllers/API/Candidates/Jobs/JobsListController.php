@@ -173,7 +173,7 @@ class JobsListController extends Controller
         if ($employee) {
 
             $query = JobApplication::query();
-           
+
             //$query->where('employ_id', $employee->id)->with('job');
             $query->where('employ_id', $employee->id)->with(
                 [
@@ -192,11 +192,11 @@ class JobsListController extends Controller
 
             $applications = $query->get()->groupBy('status');
 
-            
+
 
             $application_list = [
-                JobApplicationStatus::PENDING => ["count"=>@$applications[JobApplicationStatus::PENDING] == null ? 0 : sizeof($applications[JobApplicationStatus::PENDING]), "applications"=> @$applications[JobApplicationStatus::PENDING]],
-                JobApplicationStatus::SORT_LISTED =>["count" => @$applications[JobApplicationStatus::SORT_LISTED] == null ? 0 : sizeof($applications[JobApplicationStatus::SORT_LISTED]), "applications" => @$applications[JobApplicationStatus::SORT_LISTED]],
+                JobApplicationStatus::PENDING => ["count" => @$applications[JobApplicationStatus::PENDING] == null ? 0 : sizeof($applications[JobApplicationStatus::PENDING]), "applications" => @$applications[JobApplicationStatus::PENDING]],
+                JobApplicationStatus::SORT_LISTED => ["count" => @$applications[JobApplicationStatus::SORT_LISTED] == null ? 0 : sizeof($applications[JobApplicationStatus::SORT_LISTED]), "applications" => @$applications[JobApplicationStatus::SORT_LISTED]],
                 JobApplicationStatus::SELECTED_FOR_INTERVIEW => ["count" => @$applications[JobApplicationStatus::SELECTED_FOR_INTERVIEW] == null ? 0 : sizeof($applications[JobApplicationStatus::SELECTED_FOR_INTERVIEW]), "applications" => @$applications[JobApplicationStatus::SELECTED_FOR_INTERVIEW]],
                 JobApplicationStatus::INTERVIEWED => ["count" => @$applications[JobApplicationStatus::INTERVIEWED] == null ? 0 : sizeof($applications[JobApplicationStatus::INTERVIEWED]), "applications" => @$applications[JobApplicationStatus::INTERVIEWED]],
                 JobApplicationStatus::ACCEPTED => ["count" => @$applications[JobApplicationStatus::ACCEPTED] == null ? 0 : sizeof($applications[JobApplicationStatus::ACCEPTED]), "applications" => @$applications[JobApplicationStatus::ACCEPTED]],
@@ -295,14 +295,14 @@ class JobsListController extends Controller
             return [
                 'id' => $value->id,
                 'name' => $value->name,
-                'capital'=> $value->capital,
-                'native'=>$value->native,
+                'capital' => $value->capital,
+                'native' => $value->native,
                 'country_code' => $value->iso3,
-                'phonecode'=>$value->phonecode,
+                'phonecode' => $value->phonecode,
                 'flag' => "/assets/images/flags/" . strtolower($value->iso2) . ".svg",
                 'region' => $value->regions,
-                'subregion' =>$value->subregion,
-                'timezones'=> json_decode($value->timezones),
+                'subregion' => $value->subregion,
+                'timezones' => json_decode($value->timezones),
 
                 'curreny' => $value->currency,
                 'currency_name' => $value->currency_name,
@@ -320,11 +320,11 @@ class JobsListController extends Controller
 
         // 5 latest jobs
         $new_jobs = Job::with(['company', 'company.country', 'company.state', 'company.city', 'country', 'education_level', 'jobExperience', 'job_category', 'jobShift'])->orderBy('id', 'desc')->limit(5)->get();
-       
-        foreach($new_jobs as $job){
+
+        foreach ($new_jobs as $job) {
             $job->country->flag = "/assets/images/flags/" . strtolower($job->country->iso2) . ".svg";
         }
-       
+
 
         $all_jobs = Job::with(['company', 'company.country', 'company.state', 'company.city', 'country', 'education_level', 'jobExperience', 'job_category', 'jobShift'])->inRandomOrder()->limit(5)->get();
 
@@ -332,7 +332,7 @@ class JobsListController extends Controller
             $job->country->flag = "/assets/images/flags/" . strtolower($job->country->iso2) . ".svg";
         }
 
-        
+
 
         $featured_jobs = Job::where('is_featured', 1)->with(['company', 'country', 'education_level', 'jobExperience', 'job_category', 'jobShift'])->inRandomOrder()->limit(5)->get();
 
