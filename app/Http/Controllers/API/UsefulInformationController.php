@@ -28,8 +28,8 @@ class UsefulInformationController extends Controller
     }
 
     public function GetPage(Request $request){
-        $slug = $request->slug;
-        $page = UsefulInformation::where(["slug"=>$slug, "is_active"=>1])->get();
+        $slug = $request->id;
+        $page = UsefulInformation::where(["slug"=>$slug, "is_active"=>1])->get();        
         return $page;
     }
 }
