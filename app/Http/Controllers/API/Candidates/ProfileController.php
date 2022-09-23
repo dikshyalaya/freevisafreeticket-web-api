@@ -18,6 +18,12 @@ use DB;
 class ProfileController extends Controller
 {
     use ApiMethods;
+    private $destination = 'uploads/candidates/profiles/';
+    private $logged_in_user;
+
+    function __construct(){
+        $this->logged_in_user = Auth::user();
+    }
 
     public function get_profile()
     {
@@ -43,19 +49,21 @@ class ProfileController extends Controller
             'job_applications',
             'job_preference',
             'trainings.training'
-        ])
-            ->where('user_id', $user->id)->first();
+        ])->where('user_id', $user->id)->first();
+
+
+
         $responseData = $this->sendResponse(compact('employee', 'user'), 'success', '');
         return $responseData;
     }
 
-    private $destination = 'uploads/candidates/profiles/';
+    
     public function updateProfile(Request $request)
     {
         $user = User::find(Auth::user()->id);
         $employee = Employe::where('user_id', $user->id)->firstOrFail();
 
-        if (!$request->page OR blank($request->page)){
+        if (!$request->page or blank($request->page)) {
             return $this->sendResponse([], 'page value mismatch', '', false);
         }
 
@@ -82,8 +90,7 @@ class ProfileController extends Controller
                 'passport_number' => $request->passport_number,
                 'passport_expiry_date' => $request->passport_expiry_date,
             ]);
-        }
-        elseif($request->page == 'contact_information'){
+        } elseif ($request->page == 'contact_information') {
             $employee->mobile_phone = $request->phone1;
             $employee->mobile_phone2 = $request->phone2;
             $employee->country_id = $request->country_id;
@@ -94,17 +101,16 @@ class ProfileController extends Controller
             $employee->ward = $request->ward;
             $employee->address = $request->address;
             $employee->save();
-        }
-        elseif($request->page == 'qualification'){
+        } elseif ($request->page == 'qualification') {
 
-            if (isset($request->education_id) AND !blank($request->education_id)){
+            if (isset($request->education_id) and !blank($request->education_id)) {
                 $education_level = json_decode($request->education_id);
-                if (!is_array($education_level)){
+                if (!is_array($education_level)) {
                     return $this->sendResponse('', 'education id must be an array', '', false);
                 }
                 // remove education level
                 EmployeeEducation::where('employ_id', $employee->id)->delete();
-                foreach ($education_level as $value){
+                foreach ($education_level as $value) {
                     $employee_education = new EmployeeEducation();
                     $employee_education->employ_id = $employee->id;
                     $employee_education->educationlevels_id = $value;
@@ -112,10 +118,10 @@ class ProfileController extends Controller
                 }
             }
 
-            if (isset($request->training) AND !blank($request->training)){
+            if (isset($request->training) and !blank($request->training)) {
                 $trainings = json_decode($request->training);
 
-                if (!is_array($trainings)){
+                if (!is_array($trainings)) {
                     return $this->sendResponse('', 'training id must be an array', '', false);
                 }
 
@@ -126,15 +132,15 @@ class ProfileController extends Controller
                     $employee_training->training_id = $training;
                     $employee_training->save();
                 }
-            //    $fields['trainings'] = json_encode($trainings);
-            //    $employee->update($fields);
+                //    $fields['trainings'] = json_encode($trainings);
+                //    $employee->update($fields);
             }
 
-            if (isset($request->skill) AND !blank($request->skill)){
+            if (isset($request->skill) and !blank($request->skill)) {
                 EmployeeSkill::where('employ_id', $employee->id)->delete();
                 $skills = json_decode($request->skill);
 
-                if (!is_array($skills)){
+                if (!is_array($skills)) {
                     return $this->sendResponse('', 'skill id must be an array', '', false);
                 }
 
@@ -144,14 +150,13 @@ class ProfileController extends Controller
                     $employee_skill->skills_id = $skill;
                     $employee_skill->save();
                 }
-
             }
 
-            if (isset($request->language) AND !blank($request->language)){
+            if (isset($request->language) and !blank($request->language)) {
                 EmployeeLanguage::where('employ_id', $employee->id)->delete();
                 $languages = json_decode($request->language, true);
 
-                if (!is_array($languages)){
+                if (!is_array($languages)) {
                     return $this->sendResponse('', 'language id must be an array', '', false);
                 }
 
@@ -165,22 +170,21 @@ class ProfileController extends Controller
                     }
                 }
             }
-        }
-        elseif ($request->page == 'experience'){
+        } elseif ($request->page == 'experience') {
 
             EmployeeExperience::where('employ_id', $employee->id)->delete();
             $experiences = json_decode($request->experience, true);
 
-            if (!is_array($experiences)){
+            if (!is_array($experiences)) {
                 return $this->sendResponse('', 'experience id must be an array', '', false);
             }
-            foreach($experiences as $experience) {
+            foreach ($experiences as $experience) {
                 $employee_experience = new EmployeeExperience();
                 $employee_experience->employ_id = $employee->id;
                 $employee_experience->experiencelevels_id = $experience['experiencelevels_id'];
                 $employee_experience->country_id = $experience['country_id'];
-            //    $employee_experience->job_category_id = $experience['job_category_id'];
-            //    $employee_experience->job_title_id = $experience['job_title_id'];
+                //    $employee_experience->job_category_id = $experience['job_category_id'];
+                //    $employee_experience->job_title_id = $experience['job_title_id'];
                 $employee_experience->job_category_id = $experience['job_category_id'];
                 $employee_experience->industry_id = $experience['industry_id'];
                 $employee_experience->working_year = $experience['working_year'];
@@ -215,6 +219,26 @@ class ProfileController extends Controller
 
         $responseData = $this->sendResponse(compact('employee', 'user'), 'success', '');
         return $responseData;
+    }
+
+    public function UploadProfilePic(Request $request){
+
+        $user_id  = Auth::user()->id;
+        $profile_pic = $request->profile_pic;       
+
+        $employee = Employe::where('user_id', $user_id)->first();
+        $old_avatar= $employee->avatar;
+        
+        $file_name = $this->upload($profile_pic);
+        if(file_exists(public_path("/") . $file_name)){
+            $employee->update(["avatar" => $file_name]);
+            unlink(public_path("/") . $old_avatar);
+        }else{
+            $file_name = $old_avatar;
+        }        
+
+        return ["avatar"=>$file_name];
+        
     }
 
     public function save_profile(Request $request)
@@ -252,48 +276,50 @@ class ProfileController extends Controller
             }
 
             return $this->get_profile("Profile Updated Successfully.");
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             $responseData = $this->sendResponse([], $e->getMessage(), '', false);
             return $responseData;
         }
-
     }
-    private function process($user){
-        $employe= Employe::where('user_id',$user->id)->first();
+
+    private function process($user)
+    {
+        $employe = Employe::where('user_id', $user->id)->first();
         return [
-            "user_id"=>$user->id,
-            "first_name"=>$employe->first_name,
-            "middle_name"=>$employe->middle_name,
-            "last_name"=>$employe->last_name,
-            "email"=>$user->email,
-            "phone"=>$employe->mobile_phone,
-            "user_type"=>$user->user_type,
-            'is_verified'=>$employe->is_verified==1?true:false,
-            'image_url'=>env("APP_URL").$employe->avatar,
+            "user_id" => $user->id,
+            "first_name" => $employe->first_name,
+            "middle_name" => $employe->middle_name,
+            "last_name" => $employe->last_name,
+            "email" => $user->email,
+            "phone" => $employe->mobile_phone,
+            "user_type" => $user->user_type,
+            'is_verified' => $employe->is_verified == 1 ? true : false,
+            'image_url' => env("APP_URL") . $employe->avatar,
         ];
     }
 
-    public function change_password(Request $request){
+    public function change_password(Request $request)
+    {
         // return $request;
         $this->validate($request, [
             'old_password' => 'required',
             'new_password' => 'required'
         ]);
 
-        if(\Hash::check($request->old_password, auth()->user()->password)){
-            $authuser=Auth::user();
-            $user=User::find($authuser->id);
+        if (\Hash::check($request->old_password, auth()->user()->password)) {
+            $authuser = Auth::user();
+            $user = User::find($authuser->id);
             $user->update([
-                "password"=>bcrypt($request->new_password)
+                "password" => bcrypt($request->new_password)
             ]);
-            $employe= Employe::where('user_id',$user->id)->first();
+            $employe = Employe::where('user_id', $user->id)->first();
             $token = $authuser->token();
             $token->revoke();
             $accesstoken = $authuser->createToken('FVFT_AcessToken')->accessToken;
             return $this->sendResponse([
                 "token" => $accesstoken
-            ],"Password Changed!");
-        }else{
+            ], "Password Changed!");
+        } else {
             return $this->sendError("Password Not Matched !");
         }
     }
@@ -304,8 +330,8 @@ class ProfileController extends Controller
         $image_type_aux = explode("image/", $image_parts[0]);
         $image_type = $image_type_aux[1];
         $image_base64 = base64_decode($image_parts[1]);
-        $file = $folderPath . sha1(time()).'.'.$image_type;
-        file_put_contents(public_path("/").$file, $image_base64);
+        $file = $folderPath . sha1(time()) . '.' . $image_type;
+        file_put_contents(public_path("/") . $file, $image_base64);
         return $file;
     }
 }
