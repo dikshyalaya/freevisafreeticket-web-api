@@ -49,6 +49,22 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/preference/country', [PreferenceController::class, 'add_employes_country'])->name('candidate.preference.country.add');
     Route::patch('/preference/country', [PreferenceController::class, 'update_employes_country'])->name('candidate.preference.country.update');
     Route::delete('/preference/country/{id}', [PreferenceController::class, 'delete_employes_country'])->name('candidate.preference.country.delete');
+
+    //education level
+    Route::get('/profile/education', [ProfileController::class, 'get_employee_education'])->name('candidate.profile.education');
+    Route::post('/profile/add-education', [ProfileController::class, 'add_employee_education'])->name('candidate.profile.add-education');
+    Route::delete('/profile/education/{id}', [ProfileController::class, 'delete_employee_education'])->name('candidate.profile.delete-education');
+
+    //trainins/skills level
+    Route::get('/profile/skills', [ProfileController::class, 'get_employee_skills'])->name('candidate.profile.skill');
+    Route::post('/profile/add-skill', [ProfileController::class, 'add_employee_skill'])->name('candidate.profile.add-skill');
+    Route::delete('/profile/delete-skill/{id}', [ProfileController::class, 'delete_employee_skill'])->name('candidate.profile.delete-skill ');
+
+     //experience
+     Route::get('/profile/experience', [PreferenceController::class, 'get_employee_experience'])->name('candidate.profile.experience');
+     Route::post('/profile/add-experience', [PreferenceController::class, 'add_employee_experience'])->name('candidate.profile.add-experience');
+     Route::delete('/profile/delete-experience/{id}', [PreferenceController::class, 'delete_employee_experience'])->name('candidate.profile.delete-experience ');
+
 });
 
 

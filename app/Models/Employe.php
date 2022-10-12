@@ -104,7 +104,7 @@ class Employe extends Model
 
     public function education_level()
     {
-        return $this->belongsTo(EducationLevel::class, 'education_level_id');
+        return $this->hasMany(EmployeeEducation::class, 'employ_id');
     }
 
     public function job_applications()
@@ -144,7 +144,7 @@ class Employe extends Model
 
     public function education()
     {
-        return $this->hasMany(EmployeeEducation::class, 'employ_id');
+        return $this->hasMany(EmployeeEducation::class, 'employ_id')->orderBy('educationlevels_id',"desc");
     }
 
     public function employeeLanguage()

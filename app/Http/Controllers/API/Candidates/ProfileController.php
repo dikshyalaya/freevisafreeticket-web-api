@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\Candidates;
 
 use App\Http\Controllers\Controller;
+use App\Models\EducationLevel;
 use App\Models\EmployeeEducation;
 use App\Models\EmployeeExperience;
 use App\Models\EmployeeLanguage;
@@ -50,8 +51,6 @@ class ProfileController extends Controller
             'job_preference',
             'trainings.training'
         ])->where('user_id', $user->id)->first();
-
-
 
         $responseData = $this->sendResponse(compact('employee', 'user'), 'success', '');
         return $responseData;
@@ -333,5 +332,36 @@ class ProfileController extends Controller
         $file = $folderPath . sha1(time()) . '.' . $image_type;
         file_put_contents(public_path("/") . $file, $image_base64);
         return $file;
+    }
+
+    
+    public function get_employee_education(){
+      
+        $employee = Employe::with([
+            
+            'education',
+            'education.educationLevel'
+        ])->where('user_id', Auth::user()->id)->first();
+       
+
+        $responseData = $this->sendResponse($employee->education, 'success', '');
+        return $responseData;
+    }
+
+    public function add_employee_skill(Request $request){
+        $employee = Employe::where('user_id', Auth::user()->id)->first();
+        $education = EducationLevel::find($request->id);
+        $employee->education_level()->attach($education);
+
+    }
+
+    public function delete_employee_education(Request $request){
+
+        $employee = Employe::where('user_id', Auth::user()->id)->first();
+        $deleted_record_count =EmployeeEducation::where(["employ_id"=>$employee->id, "educationlevels_id"=>$request->id])->delete();
+
+        $responseData = $this->sendResponse($employee->education, $deleted_record_count>0?'success':'fail', '', $deleted_record_count>0);
+        return $responseData;
+
     }
 }

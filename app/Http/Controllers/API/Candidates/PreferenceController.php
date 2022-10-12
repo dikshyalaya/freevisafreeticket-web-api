@@ -355,4 +355,7 @@ class PreferenceController extends Controller
             "order_by" => (int) $employes_job_category->order_by,
         ];
     }
+
+
+
 }

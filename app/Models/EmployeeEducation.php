@@ -12,6 +12,11 @@ class EmployeeEducation extends Model
 
     protected $fillable = ['id', 'employ_id', 'educationlevels_id', 'created_at', 'updated_at'];
 
+    public function _educationLevel()
+    {
+        return $this->belongsTo(EducationLevel::class, 'educationlevels_id');
+    }
+
     public function educationLevel()
     {
         return $this->belongsTo(EducationLevel::class, 'educationlevels_id');
