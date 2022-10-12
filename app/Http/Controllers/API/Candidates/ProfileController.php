@@ -334,7 +334,7 @@ class ProfileController extends Controller
         return $file;
     }
 
-    
+    //candidate education 
     public function get_employee_education(){
       
         $employee = Employe::with([            
@@ -378,4 +378,8 @@ class ProfileController extends Controller
         return $responseData;
 
     }
+
+    //candidate skills/trainings
+    
+
 }
