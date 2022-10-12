@@ -365,6 +365,8 @@ class ProfileController extends Controller
 
         $education->save();
 
+        return $this->get_employee_education();
+
     }
 
     public function delete_employee_education(Request $request){
