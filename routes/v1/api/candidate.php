@@ -52,8 +52,8 @@ Route::middleware('auth:api')->group(function () {
 
     //education level
     Route::get('/profile/education', [ProfileController::class, 'get_employee_education'])->name('candidate.profile.education');
-    Route::post('/profile/add-education', [ProfileController::class, 'add_employee_education'])->name('candidate.profile.add-education');
-    Route::delete('/profile/education/{id}', [ProfileController::class, 'delete_employee_education'])->name('candidate.profile.delete-education');
+    Route::post('/profile/add/education', [ProfileController::class, 'add_employee_education'])->name('candidate.profile.add-education');
+    Route::delete('/profile/delete/education/{id}', [ProfileController::class, 'delete_employee_education'])->name('candidate.profile.delete-education');
 
     //trainins/skills level
     Route::get('/profile/skills', [ProfileController::class, 'get_employee_skills'])->name('candidate.profile.skill');

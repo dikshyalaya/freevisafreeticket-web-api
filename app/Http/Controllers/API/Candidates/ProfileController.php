@@ -337,21 +337,33 @@ class ProfileController extends Controller
     
     public function get_employee_education(){
       
-        $employee = Employe::with([
-            
+        $employee = Employe::with([            
             'education',
             'education.educationLevel'
-        ])->where('user_id', Auth::user()->id)->first();
-       
+        ])->where('user_id', Auth::user()->id)->first();  
 
         $responseData = $this->sendResponse($employee->education, 'success', '');
         return $responseData;
     }
 
-    public function add_employee_skill(Request $request){
+    public function add_employee_education(Request $request){
         $employee = Employe::where('user_id', Auth::user()->id)->first();
-        $education = EducationLevel::find($request->id);
-        $employee->education_level()->attach($education);
+        
+        $education = EmployeeEducation::create(
+            [
+                "employ_id"=>$employee->id, 
+                 "educationlevels_id"=>$request->educationlevels_id,
+                 "institution_name"=>$request->institution_name,
+                 "institution_address"=>$request->institution_address,
+                 "completion_year"=>$request->completion_year,
+                 "score"=>$request->score
+
+            ]
+        );
+        // $education->employ_id=$employee->id;
+        // $education->educationlevels_id=$request->id;
+
+        $education->save();
 
     }
 

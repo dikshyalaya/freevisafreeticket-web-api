@@ -10,7 +10,7 @@ class EmployeeEducation extends Model
     use HasFactory;
     protected $table = 'employes_education';
 
-    protected $fillable = ['id', 'employ_id', 'educationlevels_id', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'employ_id', 'educationlevels_id', "institution_name", "institution_address", "completion_year", "score", 'created_at', 'updated_at'];
 
     public function _educationLevel()
     {
