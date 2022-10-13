@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\API\ApiMethodsController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\Candidates\PreferenceController;
 use App\Http\Controllers\API\Location\LocationController;
 use App\Http\Controllers\API\UsefulInformationController;
+use Illuminate\Support\Facades\Route;
+
 use App\Models\UsefulInformation;
 
 Route::prefix('admin')->group(function(){
@@ -15,6 +17,10 @@ Route::prefix('candidate')->group(function(){
 Route::prefix('company')->group(function(){
     require_once 'api/company.php';
 });
+
+
+
+Route::get('options/list/{type?}', [PreferenceController::class, 'optionsList']);
 
 Route::get("countries", [LocationController::class, 'countries']);
 Route::get("states", [LocationController::class, 'states']);

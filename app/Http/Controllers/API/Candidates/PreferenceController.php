@@ -4,11 +4,16 @@ namespace App\Http\Controllers\API\Candidates;
 
 use App\Http\Controllers\Controller;
 use App\Models\Country;
+use App\Models\EducationLevel;
 use App\Models\Employe;
 use App\Models\EmployesCountry;
 use App\Models\EmployesJobCategory;
+use App\Models\ExperienceLevel;
 use App\Models\Industry;
 use App\Models\JobCategory;
+use App\Models\Language;
+use App\Models\Skill;
+use App\Models\Training;
 use App\Traits\Api\ApiMethods;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -16,6 +21,24 @@ use Illuminate\Validation\Rule;
 class PreferenceController extends Controller
 {
     use ApiMethods;
+
+    public function optionsList(Request $request){
+        $experiencelevels = ExperienceLevel::get();
+        $educationlevels = EducationLevel::get();       
+        $trainings = Training::get();
+        $skills = Skill::get();      
+        $languages = Language::get();        
+        $industries = Industry::get();
+
+        $responseData=[];
+        if($request->type!=null){
+            $responseData = $this->sendResponse(compact($request->type), 'success', '');
+        }else{
+            $responseData = $this->sendResponse(compact('experiencelevels', 'educationlevels', 'trainings', 'skills', 'languages','industries'), 'success', '');
+        }
+       
+        return $responseData;
+    }
 
     // with polymorphic relation
     public function getJobPreference()

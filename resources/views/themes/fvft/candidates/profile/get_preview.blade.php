@@ -163,7 +163,11 @@
                                                         <label for="" class="form-label">{{ __('Education') }}&nbsp;:</label>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        {{ $employ->education_level != null ? $employ->education_level->title : '' }}
+                                                    @if ($employ->education_level != null)
+                                                            @foreach ($employ->education_level as $education_level)
+                                                            <p><span>{{ $loop->iteration }}.&nbsp;</span>{{$education_level->educationLevel->title}} </p>
+                                                            @endforeach
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>

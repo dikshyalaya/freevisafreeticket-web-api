@@ -65,7 +65,18 @@ Route::middleware('auth:api')->group(function () {
      Route::post('/profile/add-experience', [PreferenceController::class, 'add_employee_experience'])->name('candidate.profile.add-experience');
      Route::delete('/profile/delete-experience/{id}', [PreferenceController::class, 'delete_employee_experience'])->name('candidate.profile.delete-experience ');
 
-});
+
+    //job prefereences
+    
+    Route::post('saveJobPreference', [PreferenceController::class, 'saveJobPreference']);
+    Route::get('getJobPreference', [PreferenceController::class, 'getJobPreference']);
+    Route::post('removeJobPreference', [PreferenceController::class, 'removeJobPreference']);
+
+    //job applications
+     Route::post('job/apply', [JobsListController::class, 'applyJob']);
+     Route::get('job/apply/list', [JobsListController::class, 'listAppliedJob']);
+
+    });
 
 
 // Listing
@@ -73,8 +84,8 @@ Route::get('job/home', [JobsListController::class, 'getHome']);
 Route::get('job-list', [JobsListController::class, 'jobListing']);
 Route::get('job-categories', [JobCategoryController::class, 'categoryListing']);
 
-Route::post('job/apply', [JobsListController::class, 'applyJob']);
-Route::get('job/apply/list', [JobsListController::class, 'listAppliedJob']);
+
+
 
 Route::get('news-categories', [NewsCategoryController::class, 'list']);
 Route::get('news', [NewsController::class, 'list']);
@@ -82,7 +93,3 @@ Route::get('news/{id}', [NewsController::class, 'index']);
 
 Route::get('banners', [BannerController::class, 'list']);
 
-
-Route::post('saveJobPreference', [PreferenceController::class, 'saveJobPreference']);
-Route::get('getJobPreference', [PreferenceController::class, 'getJobPreference']);
-Route::post('removeJobPreference', [PreferenceController::class, 'removeJobPreference']);

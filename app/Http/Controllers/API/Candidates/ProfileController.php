@@ -55,7 +55,6 @@ class ProfileController extends Controller
         $responseData = $this->sendResponse(compact('employee', 'user'), 'success', '');
         return $responseData;
     }
-
     
     public function updateProfile(Request $request)
     {
