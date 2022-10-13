@@ -18,15 +18,12 @@ Route::prefix('company')->group(function(){
     require_once 'api/company.php';
 });
 
-
-
 Route::get('options/list/{type?}', [PreferenceController::class, 'optionsList']);
 
 Route::get("countries", [LocationController::class, 'countries']);
-Route::get("states", [LocationController::class, 'states']);
-Route::get("cities", [LocationController::class, 'cities']);
+Route::get("states/{country_id}", [LocationController::class, 'states']);
+Route::get("cities/{state_id}", [LocationController::class, 'cities']);
 Route::get("metaData", [ApiMethodsController::class, 'metData']);
-
 
 Route::prefix("info-pages")->group(function(){
     Route::get("/list", [UsefulInformationController::class, 'List']);

@@ -65,26 +65,18 @@ class ProfileController extends Controller
             return $this->sendResponse([], 'page value mismatch', '', false);
         }
 
-        if ($request->page == 'personal_information') {
-            if ($request->hasFile('profile_picture')) {
-                $prf = $request->file('profile_picture');
-                $prfName = time() . '_' . $prf->getClientOriginalName();
-                $avatar = $this->destination . $prfName;
-                $prf->move(public_path($this->destination, 'public'), $prfName);
-            } else {
-                $avatar = $employee->avatar;
-            }
+        if ($request->page == 'personal_information') {           
 
             $employee->update([
                 'first_name' => $request->first_name,
                 'middle_name' => $request->middle_name,
                 'last_name' => $request->last_name,
                 'dob' => $request->english_dob,
+                'dob_in_bs' => $request->nepali_dob,
                 'gender' => $request->gender,
                 'marital_status' => $request->marital_status,
                 'height' => $request->height,
                 'weight' => $request->weight,
-                'avatar' => $avatar,
                 'passport_number' => $request->passport_number,
                 'passport_expiry_date' => $request->passport_expiry_date,
             ]);
@@ -191,32 +183,8 @@ class ProfileController extends Controller
             }
         }
 
-        $employee = Employe::with([
-            'country',
-            'state',
-            'district',
-            'city',
-            'experience',
-            'experience.country',
-            'experience.job_category',
-            'experience.industry',
-            'education_level',
-            'education.educationLevel',
-            'employeeSkills',
-            'employeeSkills.skill',
-            'employeeLanguage',
-            'employeeLanguage.language',
-            'preferredCountry',
-            'preferredCountry.country',
-            'cv',
-            'job_applications',
-            'job_preference',
-            'trainings.training'
-        ])
-            ->where('user_id', $user->id)->first();
 
-        $responseData = $this->sendResponse(compact('employee', 'user'), 'success', '');
-        return $responseData;
+     return $this->get_profile();
     }
 
     public function UploadProfilePic(Request $request){
@@ -235,7 +203,7 @@ class ProfileController extends Controller
             $file_name = $old_avatar;
         }        
 
-        return ["avatar"=>$file_name];
+        return $this->sendResponse(["avatar"=>$file_name], 'Profile photo updated successfully.');
         
     }
 
