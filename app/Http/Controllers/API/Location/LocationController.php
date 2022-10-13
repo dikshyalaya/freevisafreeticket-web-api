@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Location;
 use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\District;
 use App\Models\State;
 use Illuminate\Http\Request;
 use App\Traits\Api\ApiMethods;
@@ -70,14 +71,12 @@ class LocationController extends Controller
       
         $states = $query->paginate($limit);
 
-        $states->setCollection(
-            $states->getCollection()->transform(function ($value) {
+        $states->transform(function ($value) {
                 return [
                     'id' => $value->id,
                     'name' => $value->name
                 ];
-            })
-        );
+            });
 
         return $this->sendResponse(compact('states'),"success");
     }
@@ -94,15 +93,38 @@ class LocationController extends Controller
 
         $cities = $query->paginate($limit);
 
-        $cities->setCollection(
-            $cities->getCollection()->transform(function ($value) {
+        $cities->transform(function ($value) {
                 return [
                     'id' => $value->id,
                     'name' => $value->name
                 ];
-            })
-        );
+            });
+      
 
         return $this->sendResponse(compact('cities'),"success");
+    }
+
+    public function districts(Request $request)
+    {
+        // $districts = District::query()->where('state_id', $request->state_id);
+        // $districts->where('state_id', $request->state_id);
+
+
+        $limit= $request->has("limit") ? $request->limit : 10;
+        $query = District::query()->where('state_id', $request->state_id);
+
+        $districts = $query->paginate($limit);
+
+        $districts->transform(function ($value) {
+                return [
+                    'id' => $value->id,
+                    'name' => $value->name
+                ];
+            });
+      
+
+
+
+        return $this->sendResponse(compact('districts'),"success");
     }
 }
