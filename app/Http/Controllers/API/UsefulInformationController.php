@@ -6,30 +6,37 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Models\UsefulInformation;
+use App\Traits\Api\ApiMethods;
+
 
 class UsefulInformationController extends Controller
 {
-    public function List(Request $request)
-    {
-
-        $useful_info = UsefulInformation::where("is_active",1)->get();
-
-        $useful_info->transform(function ($value) {
-            return [
-
-                'title' => $value->title,
-                'slug' => $value->slug,
-                'banner' => $value->logo,
-
-            ];
-        });
-
-        return $useful_info;
-    }
+    use ApiMethods;
 
     public function GetPage(Request $request){
-        $slug = $request->id;
-        $page = UsefulInformation::where(["slug"=>$slug, "is_active"=>1])->get();        
-        return $page;
+        $slug = $request->slug;
+
+        $data=[];
+
+        if($slug==""){
+            $data = UsefulInformation::where("is_active",1)->get();
+
+            $data->transform(function ($value) {
+                return [
+    
+                    'title' => $value->title,
+                    'slug' => $value->slug,
+                    'banner' => $value->logo,
+    
+                ];
+            });
+    
+        }else{
+            $data = UsefulInformation::where(["slug"=>$slug, "is_active"=>1])->get();  
+        }
+            
+        
+        return $this->sendResponse($data,"success");
+        //return $page;
     }
 }

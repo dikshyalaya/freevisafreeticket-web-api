@@ -23,10 +23,7 @@ Route::get('options/list/{type?}', [PreferenceController::class, 'optionsList'])
 Route::get("countries", [LocationController::class, 'countries']);
 Route::get("states/{country_id}", [LocationController::class, 'states']);
 Route::get("cities/{state_id}", [LocationController::class, 'cities']);
-Route::get("districts/{state_id}", [LocationController::class, 'districts']);
+Route::get("cities/{state_id}", [LocationController::class, 'cities']);
 Route::get("metaData", [ApiMethodsController::class, 'metData']);
 
-Route::prefix("info-pages")->group(function(){
-    Route::get("/list", [UsefulInformationController::class, 'List']);
-    Route::get("{slug}", [UsefulInformationController::class,"GetPage"]);
-});
+Route::get("pages/{slug?}",[UsefulInformationController::class,"GetPage"]);
