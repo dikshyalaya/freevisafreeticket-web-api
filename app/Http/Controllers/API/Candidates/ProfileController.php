@@ -14,6 +14,8 @@ use App\Models\User;
 use App\Models\Employe;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\Api\ApiMethods;
+
+use App\Http\Requests\ChangePasswordRequest;
 use DB;
 
 class ProfileController extends Controller
@@ -264,30 +266,32 @@ class ProfileController extends Controller
         ];
     }
 
-    public function change_password(Request $request)
+    public function change_password(ChangePasswordRequest $request)
     {
         // return $request;
-        $this->validate($request, [
-            'old_password' => 'required',
-            'new_password' => 'required'
+       $this->validate($request, [
+            'new_password' => 'required',
+            'confirm_password' => 'required|same:new_password'            
         ]);
 
-        if (\Hash::check($request->old_password, auth()->user()->password)) {
+     
+
+        // if (\Hash::check($request->old_password, auth()->user()->password)) {
             $authuser = Auth::user();
             $user = User::find($authuser->id);
             $user->update([
                 "password" => bcrypt($request->new_password)
             ]);
-            $employe = Employe::where('user_id', $user->id)->first();
+           // $employe = Employe::where('user_id', $user->id)->first();
             $token = $authuser->token();
             $token->revoke();
             $accesstoken = $authuser->createToken('FVFT_AcessToken')->accessToken;
             return $this->sendResponse([
                 "token" => $accesstoken
             ], "Password Changed!");
-        } else {
-            return $this->sendError("Password Not Matched !");
-        }
+        // } else {
+        //     return $this->sendError("Password Not Matched !");
+        // }
     }
     public function upload($img)
     {
