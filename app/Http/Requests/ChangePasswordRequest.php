@@ -51,6 +51,5 @@ class ChangePasswordRequest extends FormRequest
             'confirm_password.same' => 'Confirm Password is does not match the new password'
         ];
     }
-
     
 }
