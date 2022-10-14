@@ -51,7 +51,8 @@ class ProfileController extends Controller
             'cv',
             'job_applications',
             'job_preference',
-            'trainings.training'
+            'trainings.training',
+            'employeeTrainings'
         ])->where('user_id', $user->id)->first();
 
         $responseData = $this->sendResponse(compact('employee', 'user'), 'success', '');
