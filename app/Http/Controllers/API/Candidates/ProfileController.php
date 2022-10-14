@@ -67,24 +67,39 @@ class ProfileController extends Controller
             return $this->sendResponse([], 'page value mismatch', '', false);
         }
 
-        if ($request->page == 'personal_information') {           
+        if ($request->page == 'profile_pic') {   
+           
+            $old_avatar= $employee->avatar;            
+            $file_name = $this->upload($request->profile_pic);
+            if(file_exists(public_path("/") . $file_name)){
+                $employee->update(["avatar" => $file_name]);
+                unlink(public_path("/") . $old_avatar);
+            }else{
+                $file_name = $old_avatar;
+            }        
+    
+            return $this->sendResponse(["avatar"=>$file_name], 'Profile photo updated successfully.');
+            
+        }
+
+        elseif ($request->page == 'personal_information') {           
 
             $employee->update([
                 'first_name' => $request->first_name,
                 'middle_name' => $request->middle_name,
                 'last_name' => $request->last_name,
-                'dob' => $request->english_dob,
-                'dob_in_bs' => $request->nepali_dob,
+                'dob' => $request->dob,
+                'dob_in_bs' => $request->dob_in_bs,
                 'gender' => $request->gender,
                 'marital_status' => $request->marital_status,
                 'height' => $request->height,
-                'weight' => $request->weight,
-                'passport_number' => $request->passport_number,
-                'passport_expiry_date' => $request->passport_expiry_date,
+                // 'weight' => $request->weight,
+                // 'passport_number' => $request->passport_number,
+                // 'passport_expiry_date' => $request->passport_expiry_date,
             ]);
         } elseif ($request->page == 'contact_information') {
-            $employee->mobile_phone = $request->phone1;
-            $employee->mobile_phone2 = $request->phone2;
+            $employee->mobile_phone = $request->mobile_phone;
+            $employee->mobile_phone2 = $request->mobile_phone2;
             $employee->country_id = $request->country_id;
             $employee->state_id = $request->state_id;
             $employee->district_id = $request->district_id;
@@ -96,26 +111,30 @@ class ProfileController extends Controller
         } elseif ($request->page == 'qualification') {
 
             if (isset($request->education_id) and !blank($request->education_id)) {
-                $education_level = json_decode($request->education_id);
-                if (!is_array($education_level)) {
-                    return $this->sendResponse('', 'education id must be an array', '', false);
-                }
+                $education_level = $request->education_id;
+                // if (!is_array($education_level)) {
+                //     return $this->sendResponse('', 'education id must be an array', '', false);
+                // }
+
                 // remove education level
                 EmployeeEducation::where('employ_id', $employee->id)->delete();
-                foreach ($education_level as $value) {
-                    $employee_education = new EmployeeEducation();
-                    $employee_education->employ_id = $employee->id;
-                    $employee_education->educationlevels_id = $value;
-                    $employee_education->save();
+                foreach( $education_level as $value){                  
+                   
+                        $employee_education = new EmployeeEducation();
+                        $employee_education->employ_id = $employee->id;
+                        $employee_education->educationlevels_id = $value;
+                        $employee_education->save();
+                    
                 }
+              
             }
 
             if (isset($request->training) and !blank($request->training)) {
-                $trainings = json_decode($request->training);
+                $trainings = $request->training;
 
-                if (!is_array($trainings)) {
-                    return $this->sendResponse('', 'training id must be an array', '', false);
-                }
+                // if (!is_array($trainings)) {
+                //     return $this->sendResponse('', 'training id must be an array', '', false);
+                // }
 
                 EmployeeTraining::where('employee_id', $employee->id)->delete();
                 foreach ($trainings as $training) {
@@ -130,11 +149,11 @@ class ProfileController extends Controller
 
             if (isset($request->skill) and !blank($request->skill)) {
                 EmployeeSkill::where('employ_id', $employee->id)->delete();
-                $skills = json_decode($request->skill);
+                $skills = $request->skill;
 
-                if (!is_array($skills)) {
-                    return $this->sendResponse('', 'skill id must be an array', '', false);
-                }
+                // if (!is_array($skills)) {
+                //     return $this->sendResponse('', 'skill id must be an array', '', false);
+                // }
 
                 foreach ($skills as $skill) {
                     $employee_skill = new EmployeeSkill();
@@ -146,11 +165,11 @@ class ProfileController extends Controller
 
             if (isset($request->language) and !blank($request->language)) {
                 EmployeeLanguage::where('employ_id', $employee->id)->delete();
-                $languages = json_decode($request->language, true);
+                $languages = $request->language;
 
-                if (!is_array($languages)) {
-                    return $this->sendResponse('', 'language id must be an array', '', false);
-                }
+                // if (!is_array($languages)) {
+                //     return $this->sendResponse('', 'language id must be an array', '', false);
+                // }
 
                 foreach ($languages as $language_id => $level) {
                     if (!blank($language_id)) {
@@ -191,22 +210,7 @@ class ProfileController extends Controller
 
     public function UploadProfilePic(Request $request){
 
-        $user_id  = Auth::user()->id;
-        $profile_pic = $request->profile_pic;       
-
-        $employee = Employe::where('user_id', $user_id)->first();
-        $old_avatar= $employee->avatar;
-        
-        $file_name = $this->upload($profile_pic);
-        if(file_exists(public_path("/") . $file_name)){
-            $employee->update(["avatar" => $file_name]);
-            unlink(public_path("/") . $old_avatar);
-        }else{
-            $file_name = $old_avatar;
-        }        
-
-        return $this->sendResponse(["avatar"=>$file_name], 'Profile photo updated successfully.');
-        
+       
     }
 
     public function save_profile(Request $request)
@@ -296,10 +300,10 @@ class ProfileController extends Controller
     public function upload($img)
     {
         $folderPath = "uploads/candidates/profiles/";
-        $image_parts = explode(";base64,", $img);
-        $image_type_aux = explode("image/", $image_parts[0]);
+        
+        $image_type_aux = explode("image/", $img["mime"]);
         $image_type = $image_type_aux[1];
-        $image_base64 = base64_decode($image_parts[1]);
+        $image_base64 = base64_decode($img["data"]);
         $file = $folderPath . sha1(time()) . '.' . $image_type;
         file_put_contents(public_path("/") . $file, $image_base64);
         return $file;
@@ -350,7 +354,7 @@ class ProfileController extends Controller
 
     }
 
-    //candidate skills/trainings
+    //private functions
     
 
 }
